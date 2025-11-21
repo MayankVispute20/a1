@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 Chinese - Family Restaurant Menu</title>
+    
+    <!-- 1. Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Google Fonts: Shrikhand (Decorative) and Inter (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- 3. Tailwind Configuration for Theme and Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-black': '#111111',
+                        'accent-red': '#D62828',
+                        'text-gold': '#FFD700', // Crisp light gold/yellow
+                    },
+                    fontFamily: {
+                        'decorative': ['Shrikhand', 'cursive'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 4. Custom Styles for Aesthetics and Scroll Reveal -->
+    <style>
+        /* General body styling */
+        body {
+            background-color: #111111;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+        }
+        
+        /* Scroll Reveal Initial State */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        /* Scroll Reveal Active State */
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Amazing Hover Animation Base */
+        .dish-card {
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        
+        /* Amazing Hover Animation Effect (Lift and Red Glow) */
+        .dish-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 20px 5px rgba(214, 40, 40, 0.8);
+            border-color: #D62828;
+        }
+    </style>
+</head>
+<body class="font-body">
+
+    <!-- Sticky Navigation Bar -->
+    <nav id="sticky-nav" class="sticky top-0 z-50 bg-primary-black shadow-lg shadow-accent-red/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Title -->
+                <div class="flex-shrink-0">
+                    <span class="font-decorative text-2xl text-accent-red tracking-widest">A1 CHINESE</span>
+                </div>
+                <!-- Navigation Links -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-4 md:space-x-8">
+                    <a href="#starters" class="nav-link text-white hover:text-text-gold hover:underline underline-offset-4 decoration-accent-red font-semibold transition duration-300 rounded-md px-3 py-2">STARTERS</a>
+                    <a href="#noodles" class="nav-link text-white hover:text-text-gold hover:underline underline-offset-4 decoration-accent-red font-semibold transition duration-300 rounded-md px-3 py-2">NOODLES</a>
+                    <a href="#special" class="nav-link text-white hover:text-text-gold hover:underline underline-offset-4 decoration-accent-red font-semibold transition duration-300 rounded-md px-3 py-2">A-1 SPECIAL</a>
+                    <a href="#lollypop" class="nav-link text-white hover:text-text-gold hover:underline underline-offset-4 decoration-accent-red font-semibold transition duration-300 rounded-md px-3 py-2">CHICKEN LOLLYPOP</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Initial Splash/Video Section -->
+    <header class="relative h-screen w-full flex flex-col justify-center items-center text-center p-4 bg-primary-black overflow-hidden">
+        
+        <!-- Video Background Element - Replace 'bgvideo.mp4' with your actual video path -->
+        <!-- The opacity is set low (20) to ensure the text remains visible without an overlay box -->
+        <video id="splash-video" autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover opacity-20">
+            <source src="bgvideo.mp4" type="video/mp4">
+            <!-- Fallback text if browser doesn't support the video tag -->
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Content displayed directly over the video, using strong text-shadow for readability -->
+        <div class="space-y-8 z-10 relative">
+            <!-- Main Title with red drop shadow for visibility -->
+            <h1 class="font-decorative text-4xl sm:text-6xl md:text-8xl text-text-gold text-shadow-red" style="text-shadow: 0 0 10px #111, 0 0 20px #D62828;">
+                A1 CHINESE
+            </h1>
+            <p class="font-body text-xl sm:text-2xl text-white text-shadow-black" style="text-shadow: 0 0 5px #000, 0 0 10px #000;">
+                — Authentic & Bold Family Restaurant —
+            </p>
+            
+            <!-- Scroll Indicator -->
+            <p class="text-sm text-gray-400 mt-12 animate-bounce">Scroll down for the menu</p>
+        </div>
+    </header>
+
+    <!-- 2. Main Menu Section -->
+    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        
+        <!-- Menu sections will be dynamically generated by JS for consistency, but we keep the static anchors -->
+
+    </main>
+    
+    <!-- Detail Modal (Initially hidden) -->
+    <div id="dish-modal" class="hidden fixed inset-0 z-[100] bg-primary-black bg-opacity-95 flex items-center justify-center p-4" onclick="closeModal(event)">
+        <div id="modal-content" class="bg-primary-black border-4 border-accent-red rounded-xl p-6 md:p-10 w-full max-w-lg shadow-2xl shadow-accent-red/50 scroll-reveal" onclick="event.stopPropagation()">
+            <div class="flex justify-end">
+                <button onclick="closeModal()" class="text-white hover:text-accent-red text-3xl font-bold leading-none">&times;</button>
+            </div>
+            
+            <h2 id="modal-name" class="font-decorative text-3xl text-text-gold mb-4 text-center"></h2>
+            
+            <img id="modal-image" class="w-full h-48 object-cover rounded-lg mb-4 border border-gray-700" src="" alt="Dish Image">
+            
+            <p id="modal-desc" class="font-body text-gray-300 mb-6 text-sm"></p>
+            
+            <div id="modal-prices" class="text-center space-y-2">
+                <!-- Prices will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. JavaScript Logic -->
+    <script>
+        // Menu Data structure defined here
+        const menuData = [
+            { id: 'starters', title: 'STARTERS', items: [
+                // 🛑 PASTE YOUR IMAGE URLS HERE 🛑
+                { name: 'Veg Spring Rolls', priceFull: '₹120', desc: 'Crispy rolls filled with shredded vegetables, served with sweet chili sauce.', imgText: 'Veg+Spring+Rolls', halfPrice: null, imageSrc: '1.jpg' },
+                { name: 'Veg Manchurian Dry', priceFull: '₹200', desc: 'Deep-fried vegetable balls coated in a spicy-tangy Indo-Chinese sauce.', imgText: 'Veg+Manchurian' , halfPrice: null, imageSrc: '2.jpg' },
+                { name: 'Chili Paneer Dry', priceFull: '₹250', desc: 'Cubes of paneer cheese tossed with bell peppers and onions in a fiery chili sauce.', imgText: 'Chili+Paneer', halfPrice: null, imageSrc: '3.jpg' },
+                { name: 'Chicken 65', priceFull: '₹300', desc: 'Spicy, deep-fried chicken appetizer, marinated with curry leaves and red chilies.', imgText: 'Chicken+65', halfPrice: null, imageSrc: '4.jpg' },
+                { name: 'Crispy Honey Chili Potato', priceFull: '₹180', desc: 'Deep-fried potato strips tossed in a sweet, spicy, and sticky honey chili sauce.', imgText: 'Honey+Chili+Potato', halfPrice: null, imageSrc: '5.jpg' },
+            ]},
+            { id: 'noodles', title: 'NOODLES', items: [
+                { name: 'Veg Hakka Noodles', priceFull: '₹180', desc: 'Wok-tossed noodles with shredded vegetables and classic Chinese seasonings.', imgText: 'Veg+Hakka', halfPrice: '₹100', imageSrc: '6.jpg' },
+                { name: 'Chicken Schezwan Noodles', priceFull: '₹220', desc: 'Spicy Schezwan-flavored noodles tossed with tender chicken pieces and veggies.', imgText: 'Chicken+Schezwan', halfPrice: '₹120', imageSrc: '7.jpg' },
+                { name: 'Egg Noodles', priceFull: '₹190', desc: 'Simple, comforting noodles tossed with scrambled egg and light seasoning.', imgText: 'Egg+Noodles', halfPrice: '₹110', imageSrc: '8.jpg' },
+                { name: 'Prawn Noodles', priceFull: '₹280', desc: 'Wok-tossed noodles featuring succulent prawns and green onions.', imgText: 'Prawn+Noodles', halfPrice: '₹150', imageSrc: '9.jpg' },
+            ]},
+            { id: 'special', title: 'A-1 SPECIAL', items: [
+                { name: 'Dragon Chicken', priceFull: '₹350', desc: 'A signature dish: crispy chicken in a rich, slightly sweet, and spicy red sauce.', imgText: 'Dragon+Chicken', halfPrice: null, imageSrc: '10.jpg' },
+                { name: 'Hot Garlic Chicken', priceFull: '₹320', desc: 'Diced chicken cooked in a pungent, spicy, and garlicky brown sauce.', imgText: 'Garlic+Chicken', halfPrice: null, imageSrc: '11.jpg' },
+                { name: 'Veg Chop Suey', priceFull: '₹240', desc: 'Crispy fried noodles topped with a savory vegetable sauce.', imgText: 'Veg+Chop+Suey', halfPrice: null, imageSrc: '12.jpg' },
+                { name: 'Chicken Fried Rice', priceFull: '₹280', desc: 'Classic fried rice with chicken, soy sauce, and spring onions.', imgText: 'Chicken+Fried+Rice', halfPrice: null, imageSrc: '13.jpg' },
+            ]},
+            { id: 'lollypop', title: 'CHICKEN LOLLYPOP', items: [
+                { name: 'Chicken Lollypop Dry', priceFull: '₹300', desc: 'Marinated chicken drumettes, fried and served dry with Schezwan dip.', imgText: 'Chicken+Lollypop', halfPrice: '₹170', imageSrc: '14.jpg' },
+                { name: 'Chicken Lollypop Gravy', priceFull: '₹330', desc: 'Chicken lollypops tossed in a signature spicy gravy.', imgText: 'Lollypop+Gravy', halfPrice: '₹190', imageSrc: '15.jpg' },
+            ]},
+        ];
+
+        // --- DOM Generation and Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContainer = document.querySelector('main');
+
+            // Function to generate the HTML for all menu sections
+            function generateMenuHTML() {
+                let html = '';
+                menuData.forEach(section => {
+                    html += `
+                        <section id="${section.id}" class="py-16">
+                            <!-- Section Heading with Scroll Reveal -->
+                            <h2 class="text-center font-decorative text-4xl md:text-5xl text-accent-red mb-12 scroll-reveal">${section.title}</h2>
+                            
+                            <!-- Menu Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    `;
+
+                    section.items.forEach(item => {
+                        const pricesHtml = item.halfPrice 
+                            ? `<span class="text-sm text-gray-400">HALF: ${item.halfPrice}</span> | <span class="text-text-gold font-bold">FULL: ${item.priceFull}</span>`
+                            : `<span class="text-text-gold font-bold">PRICE: ${item.priceFull}</span>`;
+                        
+                        html += `
+                            <!-- Dish Card with Hover & Scroll Reveal Effect (Vertical Stack Layout) -->
+                            <div class="dish-card bg-primary-black/80 rounded-xl overflow-hidden shadow-xl scroll-reveal"
+                                data-name="${item.name}"
+                                data-desc="${item.desc}"
+                                data-full-price="${item.priceFull}"
+                                data-half-price="${item.halfPrice || ''}"
+                                data-img-text="${item.imgText}"
+                                data-image-src="${item.imageSrc}"> <!-- New data attribute for image source -->
+                                
+                                <!-- 1. Image (Top, full width) -->
+                                <img src="${item.imageSrc}" 
+                                    onerror="this.onerror=null;this.src='https://placehold.co/600x300/D62828/fff?text=${item.imgText}';" 
+                                    alt="${item.name}" 
+                                    class="w-full h-48 object-cover border-b-2 border-accent-red/50">
+                                    
+                                <!-- 2 & 3. Content Section (Name & Info) -->
+                                <div class="p-4">
+                                    <!-- Dish Name (Clickable) -->
+                                    <h3 class="dish-name-trigger font-decorative text-2xl text-text-gold cursor-pointer hover:text-white transition duration-300 mb-2" onclick="openModal(this)">
+                                        ${item.name}
+                                    </h3>
+                                    <!-- Placeholder Description -->
+                                    <p class="font-body text-gray-400 text-sm mb-3">${item.desc}</p>
+                                    <!-- Prices -->
+                                    <p class="font-body text-white text-lg">${pricesHtml}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                            </div>
+                        </section>
+                    `;
+                });
+                mainContainer.innerHTML = html;
+            }
+
+            // Generate the menu content
+            generateMenuHTML();
+
+
+            // --- 1. Scroll Reveal Animation Logic (Intersection Observer) ---
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of element is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-reveal').forEach(element => {
+                observer.observe(element);
+            });
+
+            // --- 2. Smooth Scrolling for Navbar ---
+            document.querySelectorAll('.nav-link').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+
+        // --- 3. Modal Functions (Global to be accessible from inline onClick) ---
+        const modal = document.getElementById('dish-modal');
+        const modalName = document.getElementById('modal-name');
+        const modalImage = document.getElementById('modal-image');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalPrices = document.getElementById('modal-prices');
+
+        function openModal(element) {
+            const card = element.closest('.dish-card');
+            
+            const name = card.getAttribute('data-name');
+            const desc = card.getAttribute('data-desc');
+            const fullPrice = card.getAttribute('data-full-price');
+            const halfPrice = card.getAttribute('data-half-price');
+            const imgText = card.getAttribute('data-img-text');
+            const imageSrc = card.getAttribute('data-image-src'); // Retrieve new image source
+
+            // Populate Modal Content
+            modalName.textContent = name;
+            modalImage.src = imageSrc; // Use the actual image source
+            // Set onerror fallback for the modal image
+            modalImage.onerror = () => { 
+                modalImage.src = `https://placehold.co/600x400/D62828/fff?text=${imgText}`; 
+            }; 
+            modalImage.alt = name;
+            modalDesc.textContent = desc;
+
+            let pricesHtml = `<p class="text-xl text-text-gold font-bold mb-1">FULL: ${fullPrice}</p>`;
+            if (halfPrice) {
+                pricesHtml = `<p class="text-lg text-white mb-1">HALF: ${halfPrice}</p>` + pricesHtml;
+            }
+            modalPrices.innerHTML = pricesHtml;
+            
+            // Show the modal
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal(event) {
+            // Check if the click occurred on the modal background itself (not the content)
+            if (event && event.target.id !== 'dish-modal') return;
+
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore background scrolling
+        }
+
+    </script>
+
+</body>
+</html>
